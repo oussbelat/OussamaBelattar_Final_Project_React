@@ -1,0 +1,72 @@
+[
+    {
+      "id": 1,
+      "name": "Boxy T-Shirt with Roll Sleeve Detail",
+      "price": 20.00,
+      "image": "shopy1",
+      "category": "Women",
+      "color": "blue",
+      "size": ["S", "M", "L"],
+      "onSale": false
+    },
+    {
+     "id": 2,
+      "name": "Boxy1 T-Shirt with Roll Sleeve",
+      "price": 20.00,
+      "image": "shopy2",
+      "category": "Women",
+      "color": "grey",
+      "size": ["S", "M", "L" ,"XL"],
+      "onSale": false
+    },
+    {
+     "id": 3,
+      "name": "Boxy3 T-Shirt with Roll Sleeve",
+      "price": 30.00,
+      "image": "shopy3",
+      "category": "Women",
+      "color": "grey",
+      "size": ["S", "M", "L" ,"XL"],
+      "onSale": true
+    },
+    {
+     "id": 4,
+      "name": "Boxy4 T-Shirt with Roll Sleeve",
+      "price": 20.00,
+      "image": "shopy4",
+      "category": "Women",
+      "color": "black",
+      "size": ["S", "M", "L" ,"XL"],
+      "onSale": false
+    },
+    {
+     "id": 5,
+      "name": "Boxy5 T-Shirt with Roll Sleeve",
+      "price": 20.00,
+      "image": "shopy5",
+      "category": "Women",
+      "color": "grey",
+      "size": ["S", "L" ,"XL"],
+      "onSale": false
+    },
+    {
+     "id": 6,
+      "name": "Boxy6 T-Shirt with Roll Sleeve",
+      "price": 20.00,
+      "image": "shopy6",
+      "category": "Women",
+      "color": "white",
+      "size": ["S", "M" ,"XL"],
+      "onSale": false
+    },{
+     "id": 7,
+      "name": "Boxy7 T-Shirt with Roll Sleeve",
+      "price": 20.00,
+      "image": "shopy7",
+      "category": "Women",
+      "color": "black",
+      "size": ["S", "M" ,"XL"],
+      "onSale": false
+    }
+
+  ]
