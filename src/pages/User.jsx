@@ -17,14 +17,16 @@ const User = () => {
   return (
     <main className="min-h-screen bg-gray-50 py-12 flex items-center justify-center">
       <section className="container max-w-6xl px-4 grid grid-cols-1 md:grid-cols-2 gap-8">
-        <article className="bg-white p-8 rounded-lg shadow-sm flex flex-col justify-between">
+       
+      
+        <article className="bg-white p-8 rounded-lg shadow-sm flex flex-col gap-4">
           <header>
-            <h2 className="text-3xl font-semibold mb-2">New Customer</h2>
-            <p className="text-gray-600 mb-4 font-medium">Create Account</p>
+            <h2 className="text-3xl font-semibold mb-2">New customer</h2>
+            
           </header>
           <p className="text-gray-500 mb-6 leading-relaxed">
-            Create your account to shop faster, track your orders, and stay
-            updated.
+            By creating an account you will be able to shop faster, be up to date on an order's status,
+            and keep track of the orders you have previously made.
           </p>
           <button
             type="button"
@@ -35,10 +37,11 @@ const User = () => {
           </button>
         </article>
 
+     
         <article className="bg-white p-8 rounded-lg shadow-sm">
           <header>
             <h2 className="text-3xl font-semibold mb-2">Returning Customer</h2>
-            <p className="text-gray-600 mb-6">Welcome back! Please login.</p>
+            <p className="text-gray-600 mb-6">I am a returning customer.</p>
           </header>
 
           <form onSubmit={submitLogin} noValidate>
@@ -49,7 +52,12 @@ const User = () => {
               >
                 Email
               </label>
-              <input type="email" id="user-email" name="user-email" value={userEmail} onChange={(e) => setUserEmail(e.target.value)}
+              <input
+                type="email"
+                id="user-email"
+                name="user-email"
+                value={userEmail}
+                onChange={(e) => setUserEmail(e.target.value)}
                 required
                 autoComplete="email"
                 className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-gray-500"
