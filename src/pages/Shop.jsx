@@ -3,156 +3,155 @@ import { FaSearch } from "react-icons/fa";
 import { CartContext } from "../context/card";
 import Images from "../constant/image";
 
-const itemsCollection = [
+const productList = [
   {
-    id: 1,
-    title: "Boxy T-Shirt with Roll Sleeve Detail",
-    cost: 20.0,
-    category: "Women",
-    shade: "blue",
-    dimensions: ["S", "M", "L"],
-    isDiscounted: false,
-    img: Images.fr1,
+    productId: 101,
+    productName: "Boxy T-Shirt with Roll Sleeve Detail",
+    price: 20.0,
+    productCategory: "Women",
+    color: "blue",
+    availableSizes: ["S", "M", "L"],
+    hasDiscount: false,
+    productImage: Images.fr1,
   },
   {
-    id: 2,
-    title: "Boxy1 T-Shirt with Roll Sleeve",
-    cost: 20.0,
-    category: "Women",
-    shade: "yellow",
-    dimensions: ["S", "M", "L", "XL"],
-    isDiscounted: false,
-    img: Images.fr2,
+    productId: 102,
+    productName: "Boxy1 T-Shirt with Roll Sleeve",
+    price: 20.0,
+    productCategory: "Women",
+    color: "yellow",
+    availableSizes: ["S", "M", "L", "XL"],
+    hasDiscount: false,
+    productImage: Images.fr2,
   },
   {
-    id: 3,
-    title: "Boxy3 T-Shirt with Roll Sleeve",
-    cost: 30.0,
-    category: "Women",
-    shade: "grey",
-    dimensions: ["S", "M", "L", "XL"],
-    isDiscounted: true,
-    img: Images.fr3,
+    productId: 103,
+    productName: "Boxy3 T-Shirt with Roll Sleeve",
+    price: 30.0,
+    productCategory: "Women",
+    color: "grey",
+    availableSizes: ["S", "M", "L", "XL"],
+    hasDiscount: true,
+    productImage: Images.fr3,
   },
   {
-    id: 4,
-    title: "Boxy4 T-Shirt with Roll Sleeve",
-    cost: 20.0,
-    category: "Women",
-    shade: "white",
-    dimensions: ["S", "M", "L", "XL"],
-    isDiscounted: false,
-    img: Images.fr4,
+    productId: 104,
+    productName: "Boxy4 T-Shirt with Roll Sleeve",
+    price: 20.0,
+    productCategory: "Women",
+    color: "white",
+    availableSizes: ["S", "M", "L", "XL"],
+    hasDiscount: false,
+    productImage: Images.fr4,
   },
   {
-    id: 5,
-    title: "Boxy5 T-Shirt with Roll Sleeve",
-    cost: 20.0,
-    category: "Women",
-    shade: "grey",
-    dimensions: ["S", "L", "XL"],
-    isDiscounted: false,
-    img: Images.fr5,
+    productId: 105,
+    productName: "Boxy5 T-Shirt with Roll Sleeve",
+    price: 20.0,
+    productCategory: "Women",
+    color: "grey",
+    availableSizes: ["S", "L", "XL"],
+    hasDiscount: false,
+    productImage: Images.fr5,
   },
   {
-    id: 6,
-    title: "Boxy6 T-Shirt with Roll Sleeve",
-    cost: 20.0,
-    category: "Women",
-    shade: "white",
-    dimensions: ["S", "M", "XL"],
-    isDiscounted: false,
-    img: Images.fr6,
+    productId: 106,
+    productName: "Boxy6 T-Shirt with Roll Sleeve",
+    price: 20.0,
+    productCategory: "Women",
+    color: "white",
+    availableSizes: ["S", "M", "XL"],
+    hasDiscount: false,
+    productImage: Images.fr6,
   },
 ];
 
-const ShopPage = () => {
-  const [searchText, setSearchText] = useState("");
-  const [ME, setSortingMethod] = useState("Alphabetically, A-Z");
-  const [itemsLimit, setItemsLimit] = useState(6);
-  const [colorFilters, setColorFilters] = useState([]);
-  const [priceFilters, setPriceFilters] = useState([]);
-  const [sizeFilters, setSizeFilters] = useState([]);
-  const [pageNumber, setPageNumber] = useState(1);
+const Shop = () => {
+  const [searchInput, setSearchInput] = useState("");
+  const [sortOption, setSortOption] = useState("Features");
+  const [itemsPerPage, setItemsPerPage] = useState(6);
+  const [selectedColors, setSelectedColors] = useState([]);
+  const [selectedPrices, setSelectedPrices] = useState([]);
+  const [selectedSizes, setSelectedSizes] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const { addcart: addItemToCart } = useContext(CartContext);
+  const { addcart: addToCart } = useContext(CartContext);
 
-  const colorsAvailable = ["black", "grey", "blue", "white"];
-  const priceRangesAvailable = ["0-20", "20-40", "40-100"];
-  const sizesAvailable = ["S", "M", "L", "XL"];
+  const availableColors = ["black", "grey", "blue", "white"];
+  const availablePriceRanges = ["0-20", "20-40", "40-100"];
+  const availableSizes = ["S", "M", "L", "XL"];
 
-  const updateFilter = (value, currentFilters, setFilters) => {
-    if (currentFilters.includes(value)) {
-      setFilters(currentFilters.filter((v) => v !== value));
+  const toggleFilter = (value, currentArray, setArray) => {
+    if (currentArray.includes(value)) {
+      setArray(currentArray.filter((item) => item !== value));
     } else {
-      setFilters([...currentFilters, value]);
+      setArray([...currentArray, value]);
     }
-    setPageNumber(1);
+    setCurrentPage(1);
   };
 
-  const filteredProducts = itemsCollection.filter((product) => {
-    const includesSearch = product.title
+  const filteredProducts = productList.filter((item) => {
+    const matchesSearch = item.productName
       .toLowerCase()
-      .includes(searchText.toLowerCase());
-    const colorSelected =
-      colorFilters.length === 0 || colorFilters.includes(product.shade);
-    const priceSelected =
-      priceFilters.length === 0 ||
-      priceFilters.some((range) => {
+      .includes(searchInput.toLowerCase());
+    const colorMatch =
+      selectedColors.length === 0 || selectedColors.includes(item.color);
+    const priceMatch =
+      selectedPrices.length === 0 ||
+      selectedPrices.some((range) => {
         const [minPrice, maxPrice] = range.split("-").map(Number);
-        return product.cost >= minPrice && product.cost <= maxPrice;
+        return item.price >= minPrice && item.price <= maxPrice;
       });
-    const sizeSelected =
-      sizeFilters.length === 0 ||
-      sizeFilters.some((size) => product.dimensions.includes(size));
+    const sizeMatch =
+      selectedSizes.length === 0 ||
+      selectedSizes.some((size) => item.availableSizes.includes(size));
 
-    return includesSearch && colorSelected && priceSelected && sizeSelected;
+    return matchesSearch && colorMatch && priceMatch && sizeMatch;
   });
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
-    switch (ME) {
-      case "Best seller":
-      return a.cost-b.cost;
+    switch (sortOption) {
+      case "Features":
+       
+        if (a.hasDiscount && !b.hasDiscount) return -1;
+        if (!a.hasDiscount && b.hasDiscount) return 1;
+        return a.productName.localeCompare(b.productName); 
+      case "Best Seller":
+        return a.price - b.price;
       case "Alphabetically, A-Z":
-        return a.title.localeCompare(b.title);
+        return a.productName.localeCompare(b.productName);
       case "Alphabetically, Z-A":
-        return b.title.localeCompare(a.title);
+        return b.productName.localeCompare(a.productName);
       case "Price, low to high":
-        return a.cost - b.cost;
+        return a.price - b.price;
       case "Price, high to low":
-        return b.cost - a.cost;
+        return b.price - a.price;
       default:
         return 0;
     }
   });
 
-  const index = (pageNumber - 1) * itemsLimit;
-  const endIndex = index + itemsLimit;
-  const a = sortedProducts.slice(index, endIndex);
-  const pagesCount = Math.ceil(sortedProducts.length / itemsLimit);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const lastIndex = startIndex + itemsPerPage;
+  const displayedProducts = sortedProducts.slice(startIndex, lastIndex);
+  const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
+         
           <aside className="w-full lg:w-64 bg-white p-6 rounded-lg h-fit">
-            <h3 className="text-lg font-semibold mb-4 text-gray-800">
-              Filter by
-            </h3>
+            <h3 className="text-lg font-semibold mb-4 text-gray-800">Filter by</h3>
 
             <div className="mb-4">
               <h4 className="font-medium text-gray-700 mb-2">Color</h4>
-              {colorsAvailable.map((color) => (
-                <label
-                  key={color}
-                  className="flex items-center space-x-2 cursor-pointer"
-                >
+              {availableColors.map((color) => (
+                <label key={color} className="flex items-center space-x-2">
                   <input
                     type="checkbox"
-                    checked={colorFilters.includes(color)}
-                    onChange={() =>
-                      updateFilter(color, colorFilters, setColorFilters)
-                    }
+                    checked={selectedColors.includes(color)}
+                    onChange={() => toggleFilter(color, selectedColors, setSelectedColors)}
                   />
                   <span className="capitalize text-gray-600">{color}</span>
                 </label>
@@ -161,17 +160,12 @@ const ShopPage = () => {
 
             <div className="mb-4">
               <h4 className="font-medium text-gray-700 mb-2">Price</h4>
-              {priceRangesAvailable.map((range) => (
-                <label
-                  key={range}
-                  className="flex items-center space-x-2 cursor-pointer"
-                >
+              {availablePriceRanges.map((range) => (
+                <label key={range} className="flex items-center space-x-2">
                   <input
                     type="checkbox"
-                    checked={priceFilters.includes(range)}
-                    onChange={() =>
-                      updateFilter(range, priceFilters, setPriceFilters)
-                    }
+                    checked={selectedPrices.includes(range)}
+                    onChange={() => toggleFilter(range, selectedPrices, setSelectedPrices)}
                   />
                   <span className="text-gray-600">${range}</span>
                 </label>
@@ -180,17 +174,12 @@ const ShopPage = () => {
 
             <div className="mb-4">
               <h4 className="font-medium text-gray-700 mb-2">Size</h4>
-              {sizesAvailable.map((size) => (
-                <label
-                  key={size}
-                  className="flex items-center space-x-2 cursor-pointer"
-                >
+              {availableSizes.map((size) => (
+                <label key={size} className="flex items-center space-x-2">
                   <input
                     type="checkbox"
-                    checked={sizeFilters.includes(size)}
-                    onChange={() =>
-                      updateFilter(size, sizeFilters, setSizeFilters)
-                    }
+                    checked={selectedSizes.includes(size)}
+                    onChange={() => toggleFilter(size, selectedSizes, setSelectedSizes)}
                   />
                   <span className="text-gray-600">{size}</span>
                 </label>
@@ -202,21 +191,24 @@ const ShopPage = () => {
                 type="text"
                 placeholder="Search..."
                 className="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black"
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
               />
               <FaSearch className="absolute right-3 top-3 h-4 w-4 text-gray-400" />
             </div>
           </aside>
 
+         
           <main className="flex-1">
             <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
               <div className="flex items-center gap-4">
                 <select
-                  value={ME}
-                  onChange={(e) => setSortingMethod(e.target.value)}
+                  value={sortOption}
+                  onChange={(e) => setSortOption(e.target.value)}
                   className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-black"
                 >
+                  <option>Features</option>
+                  <option>Best Seller</option>
                   <option>Alphabetically, A-Z</option>
                   <option>Alphabetically, Z-A</option>
                   <option>Price, low to high</option>
@@ -224,10 +216,10 @@ const ShopPage = () => {
                 </select>
 
                 <select
-                  value={itemsLimit}
+                  value={itemsPerPage}
                   onChange={(e) => {
-                    setItemsLimit(Number(e.target.value));
-                    setPageNumber(1);
+                    setItemsPerPage(Number(e.target.value));
+                    setCurrentPage(1);
                   }}
                   className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-black"
                 >
@@ -238,21 +230,19 @@ const ShopPage = () => {
               </div>
 
               <p className="text-gray-600">
-                Showing {index + 1} to{" "}
-                {Math.min(endIndex, sortedProducts.length)} of{" "}
-                {sortedProducts.length} items
+                Showing {startIndex + 1} to {Math.min(lastIndex, sortedProducts.length)} of {sortedProducts.length} items
               </p>
             </div>
 
             <div className="flex flex-wrap gap-6">
-              {a.map((product) => {
-                const handleAddToCart = () => addItemToCart(product.id);
+              {displayedProducts.map((item) => {
+                const addToCartHandler = () => addToCart(item.productId);
                 return (
                   <div
-                    key={product.id}
-                    className="relative flex-shrink-0 w-[268px] bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden group"
+                    key={item.productId}
+                    className="relative w-[268px] bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden group"
                   >
-                    {product.isDiscounted && (
+                    {item.hasDiscount && (
                       <div className="absolute top-4 left-4 z-10">
                         <span className="bg-red-500 text-white px-3 py-1 text-sm font-medium rounded-full">
                           Sale
@@ -261,14 +251,14 @@ const ShopPage = () => {
                     )}
                     <div className="relative h-80 bg-gray-100 overflow-hidden">
                       <img
-                        src={product.img}
-                        alt={product.title}
+                        src={item.productImage}
+                        alt={item.productName}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
-                      <div className="absolute inset-0 bg-[#00000081] bg-opacity-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
+                      <div className="absolute inset-0 bg-[#00000081] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
                         <button
-                          onClick={handleAddToCart}
-                          className="bg-[#0000002c] text-white px-6 py-2 rounded-full font-medium text-sm hover:bg-gray-100 hover:text-black transition-colors duration-200 transform translate-y-4 group-hover:translate-y-0 transition-transform"
+                          onClick={addToCartHandler}
+                          className="bg-[#0000002c] text-white px-6 py-2 rounded-full font-medium text-sm hover:bg-gray-100 hover:text-black transition-colors duration-200"
                         >
                           ADD TO CART
                         </button>
@@ -276,11 +266,11 @@ const ShopPage = () => {
                     </div>
                     <div className="p-6">
                       <h3 className="text-lg font-medium text-gray-900 mb-2 line-clamp-2">
-                        {product.title}
+                        {item.productName}
                       </h3>
                       <div className="flex items-center space-x-2">
                         <span className="text-xl font-semibold text-gray-900">
-                          ${product.cost.toFixed(2)}
+                          ${item.price.toFixed(2)}
                         </span>
                       </div>
                     </div>
@@ -289,38 +279,23 @@ const ShopPage = () => {
               })}
             </div>
 
+           
             <div className="flex mt-8 gap-2 items-center justify-center flex-wrap">
-              <button
-                onClick={() => setPageNumber((prev) => Math.max(1, prev - 1))}
-                disabled={pageNumber === 1}
-                className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50"
-              >
-                Previous
-              </button>
-              {Array(pagesCount)
+              {Array(totalPages)
                 .fill()
-                .map((_, index) => (
+                .map((_, idx) => (
                   <button
-                    key={index + 1}
-                    onClick={() => setPageNumber(index + 1)}
+                    key={idx + 1}
+                    onClick={() => setCurrentPage(idx + 1)}
                     className={`rounded-full w-8 h-8 flex items-center justify-center ${
-                      pageNumber === index + 1
+                      currentPage === idx + 1
                         ? "bg-black text-white"
                         : "border border-gray-300 hover:bg-gray-50"
                     }`}
                   >
-                    {index + 1}
+                    {idx + 1}
                   </button>
                 ))}
-              <button
-                onClick={() =>
-                  setPageNumber((prev) => Math.min(pagesCount, prev + 1))
-                }
-                disabled={pageNumber === pagesCount}
-                className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50"
-              >
-                Next
-              </button>
             </div>
           </main>
         </div>
@@ -329,4 +304,4 @@ const ShopPage = () => {
   );
 };
 
-export default ShopPage;
+export default Shop;
